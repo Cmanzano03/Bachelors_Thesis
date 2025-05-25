@@ -1,6 +1,5 @@
 pyspark-env/
+data
 
-*.csv
 
-*.txt
 
