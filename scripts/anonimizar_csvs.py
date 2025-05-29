@@ -21,10 +21,10 @@ for nombre_archivo in os.listdir(carpeta_csv):
         ruta_salida = os.path.join(carpeta_parquet, f"{nombre_base}.parquet")
 
         if os.path.exists(ruta_salida):
-            print(f"⏭️  Ya existe: {nombre_base}.parquet, saltando...\n")
+            print(f"  Ya existe: {nombre_base}.parquet, saltando...\n")
             continue
 
-        print(f"📄 Procesando: {nombre_archivo}")
+        print(f" Procesando: {nombre_archivo}")
 
         try:
             df = pd.read_csv(
@@ -36,11 +36,11 @@ for nombre_archivo in os.listdir(carpeta_csv):
             )
 
             if "userid" in df.columns:
-                print("🔐 Aplicando hash a 'userid'")
+                print(" Aplicando hash a 'userid'")
                 df["userid"] = df["userid"].apply(hash_userid)
 
             df.to_parquet(ruta_salida, index=False)
-            print(f"✅ Guardado como: {ruta_salida}\n")
+            print(f" Guardado como: {ruta_salida}\n")
 
         except Exception as e:
-            print(f"❌ Error procesando {nombre_archivo}: {e}\n")
+            print(f" Error procesando {nombre_archivo}: {e}\n")
