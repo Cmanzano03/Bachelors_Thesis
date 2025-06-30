@@ -27,17 +27,10 @@ This repository contains code and notebooks developed for the processing and ana
 .
 ├── notebooks/               # Interactive notebooks for metric computation and exploration
 ├── scripts/                 # Python scripts for batch processing
-├── data/
-│   ├── raw/                 # Original CSV exports from MySQL (Moodle database)
-│   ├── parquet_anon/        # Anonymized Parquet files
-│   └── metrics/             # Aggregated metrics and intermediate results
 ├── README.md                # Project documentation
 ├── requirements.txt         # Python environment dependencies
 ```
 
-## 🔐 Anonymization
-
-User identifiers (`userid`) have been anonymized using an irreversible SHA-256 hash function. This ensures internal consistency for joins and aggregations across datasets while preserving privacy and eliminating direct traceability.
 
 ## ⚙️ Environment Setup
 
