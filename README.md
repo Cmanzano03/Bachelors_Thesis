@@ -1,64 +1,42 @@
-# Moodle Data Science - Data Processing Pipeline
+# Educational Data Mining: Student Dropout Prediction
 
-This repository contains code and notebooks developed for the processing and analysis of educational data extracted from Moodle. The main goal is to build a transformation and aggregation workflow to enable early prediction of student dropout in university courses.
+This repository contains the data engineering pipeline and machine learning models developed to predict student dropout in virtual learning environments (LMS), project developed as my bachelor thesis. By analyzing Moodle interaction logs and academic records, this project provides the study of a early warning system to identify at-risk students and discover behavioral patterns associated with course abandonment.
 
-## 🛠️ Technologies
+## 🧠 Architecture & Tech Stack
 
-- Python 3.10
-    
-- PySpark
-    
-- Pandas
-    
-- PyArrow
-    
-- Matplotlib / Seaborn
-    
-- Jupyter Notebooks
-    
-- Git + GitHub
-    
-- Visual Studio Code
-    
+The project implements a complete end-to-end data science lifecycle, from data extraction to model evaluation:
 
-## 📆 Project Structure
+*   **Data Processing:** Apache Spark (PySpark), Pandas, MySQL.
+*   **Machine Learning:** Scikit-Learn, XGBoost, TensorFlow/Keras, Imbalanced-learn.
+*   **Data Visualization:** Matplotlib, Seaborn.
 
-```
-.
-├── notebooks/               # Interactive notebooks for metric computation and exploration
-├── scripts/                 # Python scripts for batch processing
-├── README.md                # Project documentation
-├── requirements.txt         # Python environment dependencies
-```
+## ⚙️ Data Pipeline
 
+1.  **Extraction & Anonymization:** Raw operational data was extracted from a MySQL database containing Moodle records. To comply with GDPR and data minimization principles, sensitive identifiers (`userid`) were anonymized using SHA-256 hashing before leaving the university's secure data center.
+2.  **ETL (Extract, Transform, Load):** Apache Spark was utilized to handle large-scale data transformations efficiently. The logs and academic activities (assignments, quizzes, VPL submissions) were parsed and aggregated into unified Parquet datasets.
+3.  **Feature Engineering:** Features were engineered focusing on the temporal dimension, capturing metrics such as the maximum consecutive days without access, frequency of logins per month, and continuous evaluation averages.
+4.  **Modeling:** Addressed extreme class imbalance using SMOTE (Synthetic Minority Over-sampling Technique). Classifiers including Logistic Regression, Decision Trees, Neural Networks (MLP), and Gradient Boosting (XGBoost) were optimized via Random Search and evaluated using Stratified K-Fold Cross-Validation.
 
-## ⚙️ Environment Setup
+## 📊 Key Results
 
-```
-# Create and activate virtual environment
+The models were evaluated across different observation windows to balance early detection capability with predictive accuracy. 
+
+*   **Best Performing Model:** XGBoost algorithm.
+*   **Optimal Metrics:** Achieved an **F1-Score of 0.706**, Precision of 0.600, Recall of 0.857, and an AUC-ROC of 0.840.
+*   **Insights:** Sustained interaction (consecutive days accessing the platform) and completion of late-semester assignments were identified as the strongest indicators of student retention.
+
+## 🚀 Local Setup
+
+To replicate the environment locally in Linux or MacOS the following steps are required (Data not available due to GDPR):
+
+```bash
+# Clone the repository
+git clone [https://github.com/Cmanzano03/TFG_cmi_Moodle.git](https://github.com/Cmanzano03/TFG_cmi_Moodle.git)
+cd TFG_cmi_Moodle
+
+# Create and activate the virtual environment
 python3 -m venv venv
 source venv/bin/activate
 
 # Install dependencies
 pip install -r requirements.txt
-
-# Register Jupyter kernel
-python -m ipykernel install --user --name pyspark-env --display-name "Spark + Pandas"
-```
-
-## 🚀 Usage
-
-- Use Jupyter Notebook or Visual Studio Code to interact with `.ipynb` notebooks.
-    
-- Execute Python scripts from the `scripts/` directory to perform batch transformations and generate metrics.
-    
-- Intermediate and final results are stored as Parquet files for efficient access and analysis.
-    
-
-## 🧠 Objective
-
-To develop a robust data pipeline that extracts interaction patterns from Moodle logs and activity data, enabling early detection of students at risk of course dropout. This will support proactive intervention and personalized feedback from instructors.
-
----
-
-> Developed as part of a Bachelor's Thesis (TFG) on educational data mining and learning analytics.

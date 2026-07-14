@@ -1,6 +1,8 @@
 pyspark-env/
 data
 
+.vscode/
+
 
 
 notebooks/prueba.ipynb
